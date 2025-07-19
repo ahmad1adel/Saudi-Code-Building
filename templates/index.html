@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saudi Code RAG QA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        input[type="file"] {
+            margin-top: 10px;
+        }
+        input[type="submit"] {
+            padding: 8px 16px;
+        }
+        .image-preview {
+            margin-top: 20px;
+        }
+        pre {
+            background-color: #eef;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Saudi Code RAG QA</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        <label for="question">Text Question:</label><br>
+        <input type="text" name="question" id="question" placeholder="Enter your question here"><br>
+
+        <label for="image">Or Upload an Image:</label><br>
+        <input type="file" name="image" id="image"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if question %}
+        <h3>Question:</h3>
+        <p>{{ question }}</p>
+    {% endif %}
+
+    {% if image_filename %}
+        <div class="image-preview">
+            <h3>Uploaded Image:</h3>
+            <img src="{{ url_for('static', filename='uploads/' + image_filename) }}" width="400" alt="Uploaded Image">
+        </div>
+    {% endif %}
+
+    {% if answer %}
+        <h3>Answer:</h3>
+        <pre>{{ answer }}</pre>
+    {% endif %}
+</body>
+</html>
