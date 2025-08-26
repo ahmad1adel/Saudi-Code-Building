@@ -1,0 +1,934 @@
+<!-- <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول فحص الأعمال الكهربائية</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+            direction: rtl;
+        }
+        
+        @media print {
+            body {
+                margin: 0;
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+                margin: 0;
+                max-width: none;
+            }
+            table {
+                page-break-inside: avoid;
+                font-size: 12px;
+            }
+            tr {
+                page-break-inside: avoid;
+            }
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 28px;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #c0392b;
+        }
+        
+        td {
+            padding: 12px 10px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+            line-height: 1.4;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #fdf2f2;
+        }
+        
+        .item-cell {
+            font-weight: bold;
+            width: 15%;
+            color: #2c3e50;
+        }
+        
+        .status-cell {
+            text-align: center;
+            width: 10%;
+            font-weight: bold;
+        }
+        
+        .notes-cell {
+            width: 35%;
+            text-align: right;
+        }
+        
+        .sbc-cell {
+            width: 30%;
+            text-align: right;
+        }
+        
+        .cost-cell {
+            width: 10%;
+            text-align: center;
+            font-weight: bold;
+            color: #148f77;
+        }
+        
+        .passed {
+            color: #27ae60;
+        }
+        
+        .partial {
+            color: #f39c12;
+        }
+        
+        .failed {
+            color: #e74c3c;
+        }
+        
+        .unmeasurable {
+            color: #7f8c8d;
+        }
+        
+        .status-icon {
+            font-size: 18px;
+            margin-left: 5px;
+        }
+        
+        .sbc-ref {
+            background-color: #fef9e7;
+            padding: 8px;
+            margin-top: 8px;
+            border-right: 4px solid #f39c12;
+            font-size: 12px;
+        }
+        
+        .sbc-title {
+            font-weight: bold;
+            color: #d68910;
+        }
+        
+        .cost {
+            background-color: #e8f8f5;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #148f77;
+            display: inline-block;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>جدول فحص الأعمال الكهربائية والمفاتيح</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>البند</th>
+                    <th>الحالة</th>
+                    <th>الملاحظات</th>
+                    <th>مرجع كود البناء السعودي</th>
+                    <th>التكلفة المقدرة (ريال سعودي)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="item-cell">جودة المقابس الخارجية</td>
+                    <td class="status-cell passed">
+                        <span class="status-icon">✅</span>
+                        مجتاز
+                    </td>
+                    <td class="notes-cell">
+                        المقبس يبدو في حالة جيدة بدون أضرار مرئية
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">التركيب السليم لأسلاك المقابس</td>
+                    <td class="status-cell partial">
+                        <span class="status-icon">🟠</span>
+                        مجتاز جزئي
+                    </td>
+                    <td class="notes-cell">
+                        الأسلاك تبدو مرئية مما قد لا يكون آمناً. من الأفضل إخفاء الأسلاك للسلامة والمظهر الجمالي
+                    </td>
+                    <td class="sbc-cell">
+                        • متطلب كود البناء السعودي رقم 2025-03-01: يجب عزل نهايات الأسلاك حتى نقطة التوصيل<br>
+                        • sbc401-8: يجب الحفاظ على العزل الكامل للأسلاك حتى نقطة التوصيل لمنع القوس الكهربائي<br>
+                        • متطلب كود البناء السعودي رقم 2025-03-02: يجب تثبيت الأسلاك بإحكام داخل البراغي
+                    </td>
+                    <td class="cost-cell">
+                        20<br>
+                        
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">تغطية المقابس الخارجية</td>
+                    <td class="status-cell failed">
+                        <span class="status-icon">❌</span>
+                        غير مجتاز
+                    </td>
+                    <td class="notes-cell">
+                        المقبس غير مغطى بالكامل بأي لوحة واقية، مما قد يشكل خطراً
+                    </td>
+                    <td class="sbc-cell">
+                        • sbc401-8: لتغطية المقابس الخارجية، يجب أن يكون الغطاء بدرجة حماية IP55 أو أعلى<br>
+                        • المتطلب رقم 2025-01-05: إضافة غطاء واقي معتمد للمقبس الخارجي لمنع تلف الأجزاء الداخلية
+                    </td>
+                    <td class="cost-cell">
+                        45<br>
+                        
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">محاذاة المقابس أفقياً</td>
+                    <td class="status-cell passed">
+                        <span class="status-icon">✅</span>
+                        مجتاز
+                    </td>
+                    <td class="notes-cell">
+                        المقبس محاذٍ جيداً أفقياً
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">توصيل التأريض</td>
+                    <td class="status-cell unmeasurable">
+                        <span class="status-icon">⚪</span>
+                        غير قابل للقياس
+                    </td>
+                    <td class="notes-cell">
+                        لا يمكن التحقق من التأريض من الصورة
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">وسم الدوائر الكهربائية</td>
+                    <td class="status-cell unmeasurable">
+                        <span class="status-icon">⚪</span>
+                        غير قابل للقياس
+                    </td>
+                    <td class="notes-cell">
+                        لا يوجد وسم مرئي في الصورة
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">توزيع الإضاءة</td>
+                    <td class="status-cell unmeasurable">
+                        <span class="status-icon">⚪</span>
+                        غير قابل للقياس
+                    </td>
+                    <td class="notes-cell">
+                        الصورة لا تُظهر تركيبات الإضاءة أو أي سياق للتوزيع
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">ارتفاع المقابس</td>
+                    <td class="status-cell passed">
+                        <span class="status-icon">✅</span>
+                        مجتاز
+                    </td>
+                    <td class="notes-cell">
+                        المقبس مركب على الارتفاع المعياري للتطبيقات النمطية
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">التناسق في توزيع المقابس</td>
+                    <td class="status-cell unmeasurable">
+                        <span class="status-icon">⚪</span>
+                        غير قابل للقياس
+                    </td>
+                    <td class="notes-cell">
+                        مقبس واحد فقط مرئي في الصورة
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">حالة المفاتيح الكهربائية</td>
+                    <td class="status-cell unmeasurable">
+                        <span class="status-icon">⚪</span>
+                        غير قابل للقياس
+                    </td>
+                    <td class="notes-cell">
+                        لا توجد مفاتيح مرئية في الصورة
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">ارتفاع المفاتيح عن مستوى الأرضية</td>
+                    <td class="status-cell unmeasurable">
+                        <span class="status-icon">⚪</span>
+                        غير قابل للقياس
+                    </td>
+                    <td class="notes-cell">
+                        لا توجد مفاتيح مرئية في الصورة
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">تناسق المفاتيح مع تصميم الحائط</td>
+                    <td class="status-cell unmeasurable">
+                        <span class="status-icon">⚪</span>
+                        غير قابل للقياس
+                    </td>
+                    <td class="notes-cell">
+                        لا توجد مفاتيح مرئية في الصورة
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">سلامة مفاتيح التحكم</td>
+                    <td class="status-cell unmeasurable">
+                        <span class="status-icon">⚪</span>
+                        غير قابل للقياس
+                    </td>
+                    <td class="notes-cell">
+                        لا توجد مفاتيح مرئية في الصورة
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">مطابقة أغطية المفاتيح للمعايير</td>
+                    <td class="status-cell unmeasurable">
+                        <span class="status-icon">⚪</span>
+                        غير قابل للقياس
+                    </td>
+                    <td class="notes-cell">
+                        لا توجد أغطية مفاتيح مرئية في الصورة
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="item-cell">موقع المفاتيح</td>
+                    <td class="status-cell unmeasurable">
+                        <span class="status-icon">⚪</span>
+                        غير قابل للقياس
+                    </td>
+                    <td class="notes-cell">
+                        لا توجد مفاتيح مرئية في الصورة
+                    </td>
+                    <td class="sbc-cell">
+                        -
+                    </td>
+                    <td class="cost-cell">
+                        -
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html> -->
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير فحص الأعمال الكهربائية</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+            direction: rtl;
+            line-height: 1.6;
+        }
+        
+        @media print {
+            body {
+                margin: 0;
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+                margin: 0;
+                max-width: none;
+            }
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 28px;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 15px;
+        }
+        
+        .inspection-item {
+            background: #f8f9fa;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-right: 5px solid #e74c3c;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .item-header {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .item-number {
+            background: #e74c3c;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-left: 15px;
+        }
+        
+        .status-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-passed {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-partial {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .status-failed {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status-unmeasurable {
+            background: #e2e3e5;
+            color: #383d41;
+            border: 1px solid #d6d8db;
+        }
+        
+        .content-section {
+            margin-top: 15px;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 8px;
+            font-size: 16px;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 5px;
+        }
+        
+        .notes {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-right: 3px solid #17a2b8;
+        }
+        
+        .sbc-reference {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-right: 3px solid #ffc107;
+        }
+        
+        .cost-info {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 5px;
+            border-right: 3px solid #28a745;
+            text-align: center;
+        }
+        
+        .cost-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+            margin: 5px 0;
+        }
+        
+        .cost-details {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .status-icon {
+            font-size: 18px;
+        }
+        
+        .divider {
+            height: 2px;
+            background: linear-gradient(to left, #e74c3c, transparent);
+            margin: 30px 0;
+        }
+        
+        .multiple-costs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cost-item {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid #28a745;
+            min-width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تقرير فحص الأعمال الكهربائية والمفاتيح</h1>
+        
+        <div class="inspection-item">
+            <div class="item-header">
+                <div style="display: flex; align-items: center;">
+                    <div class="item-number">1</div>
+                    جودة المقابس الخارجية
+                </div>
+                <div class="status-badge status-passed">
+                    <span class="status-icon">✅</span>
+                    مجتاز
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <div class="section-title">الملاحظات</div>
+                <div class="notes">
+                    المقبس يبدو في حالة جيدة بدون أضرار مرئية
+                </div>
+                
+                <div class="section-title">مرجع كود البناء السعودي</div>
+                <div class="sbc-reference">
+                    لا يوجد متطلبات خاصة مطلوبة
+                </div>
+                
+                <div class="section-title">التكلفة المقدرة</div>
+                <div class="cost-info">
+                    <div class="cost-amount">لا توجد تكلفة</div>
+                    <div class="cost-details">البند مجتاز بدون الحاجة لإصلاحات</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="inspection-item">
+            <div class="item-header">
+                <div style="display: flex; align-items: center;">
+                    <div class="item-number">2</div>
+                    التركيب السليم لأسلاك المقابس
+                </div>
+                <div class="status-badge status-partial">
+                    <span class="status-icon">🟠</span>
+                    مجتاز جزئي
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <div class="section-title">الملاحظات</div>
+                <div class="notes">
+                    الأسلاك تبدو مرئية مما قد لا يكون آمناً. من الأفضل إخفاء الأسلاك للسلامة والمظهر الجمالي
+                </div>
+                
+                <div class="section-title">مرجع كود البناء السعودي</div>
+                <div class="sbc-reference">
+                    • متطلب كود البناء السعودي رقم 2025-03-01: يجب عزل نهايات الأسلاك حتى نقطة التوصيل<br>
+                    • sbc401-8: يجب الحفاظ على العزل الكامل للأسلاك حتى نقطة التوصيل لمنع القوس الكهربائي<br>
+                    • متطلب كود البناء السعودي رقم 2025-03-02: يجب تثبيت الأسلاك بإحكام داخل البراغي
+                </div>
+                
+                <div class="section-title">التكلفة المقدرة</div>
+                <div class="cost-info">
+                    <div class="multiple-costs">
+                        <div class="cost-item">
+                            <div class="cost-amount">20</div>
+                            <div class="cost-details">ريال سعودي<br>عزل الأسلاك</div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-amount">25</div>
+                            <div class="cost-details">ريال سعودي<br>تثبيت البراغي</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-weight: bold; color: #28a745;">
+                        إجمالي التكلفة: 45 ريال سعودي
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="inspection-item">
+            <div class="item-header">
+                <div style="display: flex; align-items: center;">
+                    <div class="item-number">3</div>
+                    تغطية المقابس الخارجية
+                </div>
+                <div class="status-badge status-failed">
+                    <span class="status-icon">❌</span>
+                    غير مجتاز
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <div class="section-title">الملاحظات</div>
+                <div class="notes">
+                    المقبس غير مغطى بالكامل بأي لوحة واقية، مما قد يشكل خطراً
+                </div>
+                
+                <div class="section-title">مرجع كود البناء السعودي</div>
+                <div class="sbc-reference">
+                    • sbc401-8: لتغطية المقابس الخارجية، يجب أن يكون الغطاء بدرجة حماية IP55 أو أعلى<br>
+                    • المتطلب رقم 2025-01-05: إضافة غطاء واقي معتمد للمقبس الخارجي لمنع تلف الأجزاء الداخلية
+                </div>
+                
+                <div class="section-title">التكلفة المقدرة</div>
+                <div class="cost-info">
+                    <div class="multiple-costs">
+                        <div class="cost-item">
+                            <div class="cost-amount">45</div>
+                            <div class="cost-details">ريال سعودي<br>غطاء IP55</div>
+                        </div>
+                        <div class="cost-item">
+                            <div class="cost-amount">25</div>
+                            <div class="cost-details">ريال سعودي<br>غطاء واقي إضافي</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; font-weight: bold; color: #28a745;">
+                        إجمالي التكلفة: 70 ريال سعودي
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="inspection-item">
+            <div class="item-header">
+                <div style="display: flex; align-items: center;">
+                    <div class="item-number">4</div>
+                    محاذاة المقابس أفقياً
+                </div>
+                <div class="status-badge status-passed">
+                    <span class="status-icon">✅</span>
+                    مجتاز
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <div class="section-title">الملاحظات</div>
+                <div class="notes">
+                    المقبس محاذٍ جيداً أفقياً
+                </div>
+                
+                <div class="section-title">مرجع كود البناء السعودي</div>
+                <div class="sbc-reference">
+                    لا يوجد متطلبات خاصة مطلوبة
+                </div>
+                
+                <div class="section-title">التكلفة المقدرة</div>
+                <div class="cost-info">
+                    <div class="cost-amount">لا توجد تكلفة</div>
+                    <div class="cost-details">البند مجتاز بدون الحاجة لإصلاحات</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="inspection-item">
+            <div class="item-header">
+                <div style="display: flex; align-items: center;">
+                    <div class="item-number">5</div>
+                    توصيل التأريض
+                </div>
+                <div class="status-badge status-unmeasurable">
+                    <span class="status-icon">⚪</span>
+                    غير قابل للقياس
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <div class="section-title">الملاحظات</div>
+                <div class="notes">
+                    لا يمكن التحقق من التأريض من الصورة
+                </div>
+                
+                <div class="section-title">مرجع كود البناء السعودي</div>
+                <div class="sbc-reference">
+                    يتطلب فحص مباشر للتحقق من التوصيل
+                </div>
+                
+                <div class="section-title">التكلفة المقدرة</div>
+                <div class="cost-info">
+                    <div class="cost-amount">غير محدد</div>
+                    <div class="cost-details">يتطلب فحص مباشر لتحديد التكلفة</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="inspection-item">
+            <div class="item-header">
+                <div style="display: flex; align-items: center;">
+                    <div class="item-number">6</div>
+                    وسم الدوائر الكهربائية
+                </div>
+                <div class="status-badge status-unmeasurable">
+                    <span class="status-icon">⚪</span>
+                    غير قابل للقياس
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <div class="section-title">الملاحظات</div>
+                <div class="notes">
+                    لا يوجد وسم مرئي في الصورة
+                </div>
+                
+                <div class="section-title">مرجع كود البناء السعودي</div>
+                <div class="sbc-reference">
+                    يتطلب فحص لوحة التوزيع الكهربائية
+                </div>
+                
+                <div class="section-title">التكلفة المقدرة</div>
+                <div class="cost-info">
+                    <div class="cost-amount">غير محدد</div>
+                    <div class="cost-details">يتطلب فحص مباشر لتحديد التكلفة</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="inspection-item">
+            <div class="item-header">
+                <div style="display: flex; align-items: center;">
+                    <div class="item-number">7</div>
+                    توزيع الإضاءة
+                </div>
+                <div class="status-badge status-unmeasurable">
+                    <span class="status-icon">⚪</span>
+                    غير قابل للقياس
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <div class="section-title">الملاحظات</div>
+                <div class="notes">
+                    الصورة لا تُظهر تركيبات الإضاءة أو أي سياق للتوزيع
+                </div>
+                
+                <div class="section-title">مرجع كود البناء السعودي</div>
+                <div class="sbc-reference">
+                    يتطلب فحص شامل لنظام الإضاءة
+                </div>
+                
+                <div class="section-title">التكلفة المقدرة</div>
+                <div class="cost-info">
+                    <div class="cost-amount">غير محدد</div>
+                    <div class="cost-details">يتطلب فحص مباشر لتحديد التكلفة</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="inspection-item">
+            <div class="item-header">
+                <div style="display: flex; align-items: center;">
+                    <div class="item-number">8</div>
+                    ارتفاع المقابس
+                </div>
+                <div class="status-badge status-passed">
+                    <span class="status-icon">✅</span>
+                    مجتاز
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <div class="section-title">الملاحظات</div>
+                <div class="notes">
+                    المقبس مركب على الارتفاع المعياري للتطبيقات النمطية
+                </div>
+                
+                <div class="section-title">مرجع كود البناء السعودي</div>
+                <div class="sbc-reference">
+                    لا يوجد متطلبات خاصة مطلوبة
+                </div>
+                
+                <div class="section-title">التكلفة المقدرة</div>
+                <div class="cost-info">
+                    <div class="cost-amount">لا توجد تكلفة</div>
+                    <div class="cost-details">البند مجتاز بدون الحاجة لإصلاحات</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- يمكن إضافة باقي البنود بنفس التنسيق -->
+        
+        <div style="background: #e9ecef; padding: 20px; border-radius: 8px; margin-top: 30px; text-align: center;">
+            <h3 style="color: #495057; margin-bottom: 10px;">ملخص التكاليف الإجمالية</h3>
+            <div style="font-size: 24px; font-weight: bold; color: #28a745;">
+                إجمالي التكلفة المطلوبة: 115 ريال سعودي
+            </div>
+            <div style="font-size: 14px; color: #6c757d; margin-top: 5px;">
+                (تشمل فقط البنود التي تحتاج إصلاح)
+            </div>
+        </div>
+    </div>
+</body>
+</html>

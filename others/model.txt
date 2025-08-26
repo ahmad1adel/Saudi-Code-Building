@@ -1,0 +1,235 @@
+
+
+import os
+import base64
+import requests
+import re
+from langchain.prompts import PromptTemplate
+from langchain_community.vectorstores import FAISS
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.llms import CTransformers
+from langchain.chains import LLMChain
+from transformers import AutoTokenizer
+from deep_translator import GoogleTranslator  # مكتبة للترجمة
+
+# ==== Config ====
+os.environ['ALLOW_DANGEROUS_DESERIALIZATION'] = "true"
+DB_FAISS_PATH = 'vectorstore/db_faiss'
+
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+VISION_MODEL = "mistralai/mistral-small-3.2-24b-instruct:free"
+
+# ==== Tokenizer for Truncation ====
+tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
+
+def truncate_text_to_tokens(text: str, max_tokens: int = 512):
+    tokens = tokenizer.encode(text, truncation=True, max_length=max_tokens)
+    return tokenizer.decode(tokens, skip_special_tokens=True)
+
+# ==== Prompt Template ====
+custom_prompt_template = """
+You are a helpful assistant. Use the following extracted document information to answer the question.
+
+If the answer is in multiple parts (e.g., general and technical requirements), include both parts clearly and completely.
+
+Always extract only from the provided context. Do not make up or guess answers.
+
+Context:
+{context}
+
+Question:
+{question}
+
+Answer in a clear, organized list format:
+"""
+
+# ==== Load Local LLM ====
+def load_llm():
+    print("🧠 Loading local LLM...")
+    llm = CTransformers(
+        model="mistral-7b-instruct-v0.1.Q4_K_M.gguf",
+        model_type="llama",
+        max_new_tokens=512,
+        temperature=0.5
+    )
+    print("✅ LLM loaded.")
+    return llm
+
+# ==== Load FAISS Vector DB ====
+def load_vector_db():
+    print("📚 Loading FAISS vector store...")
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2",
+        model_kwargs={'device': 'cpu'}
+    )
+    db = FAISS.load_local(DB_FAISS_PATH, embeddings, allow_dangerous_deserialization=True)
+    print("✅ Vector DB loaded.")
+    return db
+
+# ==== Main RAG Answer Function ====
+def get_answer(query: str):
+    print(f"\n❓ [RAG] Query: {query}")
+    
+    db = load_vector_db()
+    retriever = db.as_retriever(search_kwargs={"k": 2})  # قللنا لـ k=2 لتقليل التكرار
+    llm = load_llm()
+
+    prompt = PromptTemplate(
+        template=custom_prompt_template,
+        input_variables=["context", "question"]
+    )
+
+    print("🔎 [RAG] Retrieving top document chunk(s)...")
+    docs = retriever.get_relevant_documents(query)
+    for i, doc in enumerate(docs):
+        content = doc.page_content.strip()
+        print(f"\n--- RAG Chunk {i+1} ---\n{content[:300]}...")
+
+    raw_context = "\n\n".join(doc.page_content for doc in docs)
+    truncated_context = truncate_text_to_tokens(raw_context, max_tokens=512)
+
+    chain = LLMChain(llm=llm, prompt=prompt)
+    response = chain.invoke({"context": truncated_context, "question": query})
+
+    # ✂️ قص أول 3-4 جمل مفيدة فقط
+    text = response['text']
+    sentences = re.split(r'(?<=[.!?]) +', text)
+    shortened = " ".join(sentences[:4])
+
+    # 🧹 فلترة التكرارات
+    shortened = re.sub(r'(reinforcement.*?)(\1)+', r'\1', shortened, flags=re.IGNORECASE)
+
+    print("\n✅ [RAG] Answer:\n" + shortened)
+    return {
+        "result": shortened,
+        "source_documents": docs
+    }
+
+# ==== Checklist ====
+foundation_checklist = """
+Check the following items in the image and return each item with one of:
+- "Passed"
+- "Partial pass" + describe issue and possible fix
+- "Not passed"
+- "Unmeasurable"
+
+Items to check:
+1. Matching the type of foundations with the report's recommendations.
+2. Safety of the excavation sides and the depth of the excavation.
+3. Cleanliness of the excavation floor from dirt and water.
+4. Presence of the lean concrete layer (Lean Concrete) under the foundations.
+5. Matching the dimensions of the footings to the plan.
+6. Reinforcement of the footings according to the plan.
+7. Covering the steel with the approved cover distances.
+8. Presence of structural expansion joints (if necessary).
+9. Use of ground insulation materials (if any).
+"""
+
+# ==== Vision-to-RAG Function ====
+def analyze_image_and_get_answer(image_path: str):
+    with open(image_path, "rb") as image_file:
+        encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
+
+    payload = {
+        "model": VISION_MODEL,
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": foundation_checklist},
+                    {
+                        "type": "image_url",
+                        "image_url": {"url": f"data:image/jpeg;base64,{encoded_image}"}
+                    }
+                ]
+            }
+        ],
+        "stream": False
+    }
+
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    print("🖼️ Sending image to Vision API...")
+    res = requests.post("https://openrouter.ai/api/v1/chat/completions", json=payload, headers=headers)
+
+    if res.status_code != 200:
+        raise Exception(f"❌ Vision API Error {res.status_code}: {res.text}")
+
+    vision_response = res.json()
+    analysis_text = vision_response["choices"][0]["message"]["content"]
+    print("\n🧾 [Vision Model Raw Output]:\n", analysis_text)
+
+    # ===== Parse multi-line format =====
+    structured_en = []
+    current_item, current_status, current_notes = None, None, []
+
+    for line in analysis_text.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+
+        if line[0].isdigit() and "**" in line:  # new item
+            if current_item:
+                structured_en.append({
+                    "item": current_item,
+                    "status": current_status or "Unmeasurable",
+                    "notes": " ".join(current_notes).strip()
+                })
+            current_item = line.strip(" *:")
+            current_status = None
+            current_notes = []
+
+        elif line.startswith("-"):  # status line
+            status_line = line.lstrip("- ").strip()
+            if status_line.lower().startswith("passed"):
+                current_status, note = "Passed", status_line.replace("Passed", "").strip()
+            elif status_line.lower().startswith("partial pass"):
+                current_status, note = "Partial pass", status_line.replace("Partial pass", "").strip()
+            elif status_line.lower().startswith("not passed"):
+                current_status, note = "Not passed", status_line.replace("Not passed", "").strip()
+            elif status_line.lower().startswith("unmeasurable"):
+                current_status, note = "Unmeasurable", status_line.replace("Unmeasurable", "").strip()
+            else:
+                note = status_line
+            if note:
+                current_notes.append(note)
+
+        else:  # extra notes
+            current_notes.append(line)
+
+    if current_item:
+        structured_en.append({
+            "item": current_item,
+            "status": current_status or "Unmeasurable",
+            "notes": " ".join(current_notes).strip()
+        })
+
+    # ===== Run RAG on Partial/Not passed =====
+    for r in structured_en:
+        if r["status"] in ["Partial pass", "Not passed"]:
+            rag_result = get_answer(f"SBC requirement for: {r['item']}")
+            r["notes"] += f"\n\nSBC Ref: {rag_result['result']}"
+
+    # ===== Arabic Translation =====
+    structured_ar = []
+    for r in structured_en:
+        translated_item = GoogleTranslator(source='en', target='ar').translate(r["item"])
+        translated_status = {
+            "Passed": "✔️ ناجح",
+            "Partial pass": "🟠 نجاح جزئي",
+            "Not passed": "❌ لم ينجح",
+            "Unmeasurable": "⚪ غير قابل للقياس"
+        }.get(r["status"], r["status"])
+        translated_notes = GoogleTranslator(source='en', target='ar').translate(r["notes"]) if r["notes"] else "-"
+
+        structured_ar.append({
+            "item": translated_item,
+            "status": translated_status,
+            "notes": translated_notes
+        })
+
+    return {"structured_en": structured_en, "structured_ar": structured_ar}
+

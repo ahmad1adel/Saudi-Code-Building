@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>عرض تنفيذي: نظام عقول افتراضية متعددة</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print { .no-print { display:none !important; } a[href^="http"]::after{content:"";} }
+    tbody tr:nth-child(odd){ background:#fafafa; }
+    .badge{ @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased">
+  <div class="max-w-6xl mx-auto p-6 space-y-6">
+    <!-- Header -->
+    <header class="bg-white rounded-2xl shadow p-6">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold">عرض تنفيذي: نظام ذكاء اصطناعي متعدد العقول</h1>
+          <p class="mt-1 text-gray-600">تعريب كامل، بروتوكول JSON، نظام مكافآت/عقوبات، واجهة ويب، مستخدمين بصلاحيات، ونشر على سيرفر مستقر.</p>
+        </div>
+        <div class="no-print flex items-center gap-2">
+          <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-gray-900 text-white hover:bg-gray-800 transition">طباعة / حفظ PDF</button>
+          <a href="#" onclick="downloadHTML()" class="px-4 py-2 rounded-xl bg-white border border-gray-200 hover:bg-gray-100 transition">تحميل ملف HTML</a>
+        </div>
+      </div>
+      <div class="mt-4 flex flex-wrap gap-3 text-sm text-gray-700">
+        <span class="badge border-gray-300">لغات: العربية (كامل) + الإنجليزية</span>
+        <span class="badge border-gray-300">تواصل داخلي: JSON</span>
+        <span class="badge border-gray-300">قناة حالية: Telegram (قابلة للتبديل)</span>
+        <span class="badge border-gray-300">لوحات تحكم: ويب متجاوب</span>
+      </div>
+    </header>
+
+    <!-- Summary Cards -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white rounded-2xl shadow p-5">
+        <div class="text-sm text-gray-500">عدد المراحل</div>
+        <div class="mt-2 text-2xl font-bold">10</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-5">
+        <div class="text-sm text-gray-500">المدة الكلية التقديرية</div>
+        <div class="mt-2 text-2xl font-bold">32 يوم عمل</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-5">
+        <div class="text-sm text-gray-500">التكلفة الإجمالية</div>
+        <div class="mt-2 text-2xl font-bold">$3,900</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-5">
+        <div class="text-sm text-gray-500">التسليم</div>
+        <div class="mt-2 text-2xl font-bold">نسخة جاهزة + توثيق</div>
+      </div>
+    </section>
+
+    <!-- Scope & Deliverables -->
+    <section class="bg-white rounded-2xl shadow p-6 space-y-4">
+      <h2 class="text-xl font-bold">نطاق العمل (Scope) والمخرجات</h2>
+      <ul class="list-disc pr-6 space-y-2 text-gray-800 text-sm leading-7">
+        <li>تصميم بروتوكول تواصل داخلي موحّد بين العقول بصيغة <span class="font-semibold">JSON مختصر</span> (طلبات/استجابات/أحداث/أخطاء/مقاييس).</li>
+        <li>تعريب كامل للواجهات والأوامر والرسائل، مع دعم i18n للتبديل.</li>
+        <li>نظام حوكمة أداء: <span class="font-semibold">مكافآت/عقوبات</span> بناءً على مؤشرات (زمن الاستجابة، الدقة، الاتساق، تكلفة الاستهلاك).</li>
+        <li>واجهة ويب متجاوبة (موبايل/تابلت/ديسكتوب) لإدارة البيئات (وهمية/حقيقية) والمندوبين والتحكم اللحظي.</li>
+        <li>نظام مستخدمين متعدد الصلاحيات (Admin/عادي) مع إدارة حسابات وRBAC وجلسات آمنة.</li>
+        <li>لوحات تحكم وتحليلات وتقارير مع سجل تشغيل (Logs) وتتبع المهام.</li>
+        <li>نشر النظام على سيرفر مستقر (Docker + CI/CD + مراقبة وأسطر إنذار).</li>
+        <li>توثيق تقني + دليل استخدام + تدريب مختصر.</li>
+      </ul>
+    </section>
+
+    <!-- Architecture (high-level) -->
+    <section class="bg-white rounded-2xl shadow p-6 space-y-3">
+      <h2 class="text-xl font-bold">العمارة المقترحة (High-level)</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="text-sm text-gray-800 leading-7">
+          <ul class="list-disc pr-6 space-y-2">
+            <li><span class="font-semibold">Core Orchestrator</span> (العقل الرئيسي): جدولة الاجتماعات، توزيع المهام، دمج الردود.</li>
+            <li><span class="font-semibold">Agents (العقول)</span>: غير متخصصة، قابلة للتوسعة عبر Plugins.</li>
+            <li><span class="font-semibold">Delegates</span>: مندوب لكل بيئة بيانات (وهمية/حقيقية) للتواصل مع العقول.</li>
+            <li><span class="font-semibold">Message Bus</span>: قناة موثوقة (مثلاً Redis Streams أو RabbitMQ) لتبادل JSON.</li>
+            <li><span class="font-semibold">API Layer</span>: تكامل مع API خارجي مدفوع (حسب الاستهلاك) + Webhooks.</li>
+            <li><span class="font-semibold">Web App</span>: Vue.js + Tailwind، مع صفحات: تسجيل/دخول، البيئات، المندوبين، اللوحات.</li>
+            <li><span class="font-semibold">Auth & RBAC</span>: JWT/Session، أدوار Admin/User، سياسات وصول.</li>
+            <li><span class="font-semibold">Observability</span>: Logs، Metrics، Dashboards، تنبيهات.</li>
+          </ul>
+        </div>
+        <pre class="bg-gray-900 text-gray-100 text-xs p-4 rounded-xl overflow-auto">
++-----------------------------+
+|        Web App (Vue)        |
+|  - Environments Dashboard   |
+|  - Delegates Control        |
+|  - Users & Roles            |
++-------------+---------------+
+              |
+              v
++-------------+---------------+
+|          Backend API        |
+|  Auth (JWT/RBAC)            |
+|  Orchestrator               |
+|  Rewards/Penalties          |
+|  Integrations (External API)|
++-------------+---------------+
+              |
+              v
++-------------+---------------+
+|         Message Bus         |
+|  JSON Events & Commands     |
++-------------+---------------+
+              |
+      +-------+--------+
+      |                |
+      v                v
++-----+-----+    +-----+-----+
+|  Agents   |    | Delegates |
+| (Brains)  |    | per Env   |
++-----------+    +-----------+
+        </pre>
+      </div>
+    </section>
+
+    <!-- Phases Table -->
+    <section class="bg-white rounded-2xl shadow overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="text-lg font-bold">خطة التنفيذ (مراحل + مدة + تكلفة)</h2>
+        <span class="text-xs text-gray-500">الأزمنة أيام عمل</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-gray-100">
+            <tr class="text-right">
+              <th class="px-6 py-3 font-semibold">#</th>
+              <th class="px-6 py-3 font-semibold">المرحلة</th>
+              <th class="px-6 py-3 font-semibold">الوصف</th>
+              <th class="px-6 py-3 font-semibold whitespace-nowrap">المدة</th>
+              <th class="px-6 py-3 font-semibold whitespace-nowrap">التكلفة</th>
+              <th class="px-6 py-3 font-semibold whitespace-nowrap">المخرجات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-6 py-4">0</td>
+              <td class="px-6 py-4 font-medium">اكتشاف المتطلبات والتوافق</td>
+              <td class="px-6 py-4">جلسة مواءمة، تعريف KPIs، تأكيد مصادر البيانات وحالات الاستخدام.</td>
+              <td class="px-6 py-4">2</td>
+              <td class="px-6 py-4">$200</td>
+              <td class="px-6 py-4">وثيقة متطلبات & خطة تفصيلية</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4">1</td>
+              <td class="px-6 py-4 font-medium">بروتوكول JSON</td>
+              <td class="px-6 py-4">تصميم مخططات الرسائل (Request/Reply/Event/Error) ونسخة تجريبية.</td>
+              <td class="px-6 py-4">5</td>
+              <td class="px-6 py-4">$600</td>
+              <td class="px-6 py-4">Schema + Validator + أمثلة</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4">2</td>
+              <td class="px-6 py-4 font-medium">نظام مكافآت/عقوبات</td>
+              <td class="px-6 py-4">تعريف المقاييس، معادلات النقاط، وسياسات التعلّم/التغذية الراجعة.</td>
+              <td class="px-6 py-4">4</td>
+              <td class="px-6 py-4">$500</td>
+              <td class="px-6 py-4">Module قابل للتهيئة + Dashboard مؤشرات</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4">3</td>
+              <td class="px-6 py-4 font-medium">تعريب كامل (i18n)</td>
+              <td class="px-6 py-4">تعريب الأوامر والواجهات والرسائل وإتاحة التبديل بين اللغات.</td>
+              <td class="px-6 py-4">3</td>
+              <td class="px-6 py-4">$300</td>
+              <td class="px-6 py-4">ملفات ترجمة + مفاتيح i18n</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4">4</td>
+              <td class="px-6 py-4 font-medium">إعادة تصميم الأوركسترا والـ Delegates</td>
+              <td class="px-6 py-4">إدارة دورية الاجتماعات، تعيين المهام، وواجهة مندوب لكل بيئة.</td>
+              <td class="px-6 py-4">5</td>
+              <td class="px-6 py-4">$700</td>
+              <td class="px-6 py-4">Orchestrator v2 + واجهات تفويض</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4">5</td>
+              <td class="px-6 py-4 font-medium">نظام المستخدمين والصلاحيات</td>
+              <td class="px-6 py-4">تسجيل/دخول، أدوار Admin/User، RBAC، إدارة المستخدمين والبيئات.</td>
+              <td class="px-6 py-4">4</td>
+              <td class="px-6 py-4">$450</td>
+              <td class="px-6 py-4">Auth + إدارة المستخدمين</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4">6</td>
+              <td class="px-6 py-4 font-medium">واجهة ويب متجاوبة</td>
+              <td class="px-6 py-4">Vue.js + Tailwind: لوحات تحكم، تشغيل/إيقاف/تعليق، حالة لحظية.</td>
+              <td class="px-6 py-4">7</td>
+              <td class="px-6 py-4">$800</td>
+              <td class="px-6 py-4">SPA متكاملة + مكونات UI</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4">7</td>
+              <td class="px-6 py-4 font-medium">النشر والمراقبة</td>
+              <td class="px-6 py-4">Docker، CI/CD، مراقبة Logs/Metrics وتنبيهات.</td>
+              <td class="px-6 py-4">3</td>
+              <td class="px-6 py-4">$450</td>
+              <td class="px-6 py-4">بيئة إنتاج مستقرة</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4">8</td>
+              <td class="px-6 py-4 font-medium">التجارب والاعتمادية</td>
+              <td class="px-6 py-4">اختبارات وحدات وتكامل، أمان، وتحسينات الأداء.</td>
+              <td class="px-6 py-4">3</td>
+              <td class="px-6 py-4">$400</td>
+              <td class="px-6 py-4">تقرير اختبارات + خطة تحسين</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4">9</td>
+              <td class="px-6 py-4 font-medium">التوثيق والتسليم</td>
+              <td class="px-6 py-4">دليل استخدام، توثيق API، جلسة تدريب سريعة.</td>
+              <td class="px-6 py-4">2</td>
+              <td class="px-6 py-4">$200</td>
+              <td class="px-6 py-4">Docs + Hand‑over</td>
+            </tr>
+            <tr class="bg-gray-100 font-semibold">
+              <td class="px-6 py-4">—</td>
+              <td class="px-6 py-4">الإجمالي</td>
+              <td class="px-6 py-4"></td>
+              <td class="px-6 py-4 whitespace-nowrap">32 يوم عمل</td>
+              <td class="px-6 py-4 whitespace-nowrap">$3,900</td>
+              <td class="px-6 py-4"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Roles & Responsibilities -->
+    <section class="bg-white rounded-2xl shadow p-6 space-y-4">
+      <h2 class="text-xl font-bold">الأدوار والمسؤوليات</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-800">
+        <div>
+          <h3 class="font-semibold mb-2">فريقنا</h3>
+          <ul class="list-disc pr-6 space-y-1">
+            <li>الهندسة المعمارية للنظام والتكاملات.</li>
+            <li>تطوير الواجهة الأمامية والخلفية والاختبارات.</li>
+            <li>النشر والمراقبة والتوثيق والتدريب.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-2">على العميل</h3>
+          <ul class="list-disc pr-6 space-y-1">
+            <li>توفير صلاحيات الوصول وقيم API Keys.</li>
+            <li>تحديد حالات الاستخدام الأساسية وKPIs.</li>
+            <li>اعتماد سريع على التصاميم والمخرجات المرحلية.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Assumptions & SLA -->
+    <section class="bg-white rounded-2xl shadow p-6 space-y-4">
+      <h2 class="text-xl font-bold">افتراضات وشروط الخدمة</h2>
+      <ul class="list-disc pr-6 space-y-2 text-sm text-gray-800 leading-7">
+        <li>المدة لا تشمل فترات انتظار مزودي الخدمات الخارجية أو الموافقات.</li>
+        <li>التعديلات غير المحدودة تخص نفس النطاق المتفق عليه (Scope)؛ التوسعات الكبيرة تُسعّر منفصلاً.</li>
+        <li>سرية تامة واتفاق عدم إفشاء (NDA) عند الطلب.</li>
+        <li>تحديثات وتقارير يومية مختصرة عبر البريد أو لوحة المتابعة.</li>
+        <li>توصية الاستضافة: VPS أو Kubernetes مصغّر بحسب الحمل المتوقع.</li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-sm text-gray-600 pb-16">
+      <p>هذا العرض قابل للتعديل وفق تفاصيلكم النهائية. يسعدنا بدء التنفيذ فور اعتمادكم.</p>
+      <p class="mt-1">تواصل: example@example.com • +000 0000 0000</p>
+    </footer>
+  </div>
+
+  <script>
+    function downloadHTML(){
+      const blob = new Blob([document.documentElement.outerHTML], {type:"text/html;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "ai-multi-agents-proposal.html"; a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

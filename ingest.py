@@ -1,45 +1,54 @@
-
+import os
+import pandas as pd
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-import os
+from langchain.schema import Document
 
-DATA_PATH = 'data/'
 DB_FAISS_PATH = 'vectorstore/db_faiss'
+EXCEL_FILE = "data/Trasnlate.xlsx"  # ملف البنود الجديد
 
 # Create vector database
 def create_vector_db():
-    print("🔍 Step 1: Loading PDF documents from:", DATA_PATH)
-    loader = DirectoryLoader(
-        DATA_PATH,
-        glob='*.pdf',
-        loader_cls=PyPDFLoader
-    )
-    documents = loader.load()
-    print(f"✅ Loaded {len(documents)} document(s).")
+    print(f"🔍 Step 1: Loading Excel file: {EXCEL_FILE}")
+    df = pd.read_excel(EXCEL_FILE)
 
-    print("🔄 Step 2: Splitting documents into chunks (safe length)...")
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=400,        # Reduced to avoid exceeding context window
-        chunk_overlap=100
-    )
-    texts = text_splitter.split_documents(documents)
-    print(f"✅ Split into {len(texts)} text chunks.")
+    print(f"✅ Loaded {len(df)} rows from Excel.")
 
-    # Optional: print first chunk preview
-    print("📌 Preview of first chunk:")
-    print(texts[0].page_content[:500], '...' if len(texts[0].page_content) > 500 else '')
+    # حوّل كل صف إلى Document
+    documents = []
+    for i, row in df.iterrows():
+        content = f"""
+        Item No.: {row.get('Item No.', i+1)}
+        Item Name: {row.get('Item Name', '')}
+        Requirement No.: {row.get('Requirement No.', '')}
+        Requirement Text: {row.get('Requirement Text', '')}
+        Definition (Saudi Code): {row.get('Definition according to the Saudi Code', '')}
+        Suggested Repair Method: {row.get('Suggested Repair Method', '')}
+        Estimated Cost (SAR): {row.get('Estimated Cost (SAR)', '')}
+        """
 
-    print("🧠 Step 3: Generating embeddings using HuggingFace model...")
+        doc = Document(
+            page_content=content,
+            metadata={
+                "row_index": i,
+                "item_name": row.get("Item Name", ""),
+                "requirement_text": row.get("Requirement Text", ""),
+                "definition": row.get("Definition according to the Saudi Code", "")
+            }
+        )
+        documents.append(doc)
+
+    print(f"📄 Converted {len(documents)} rows into documents.")
+
+    print("🧠 Step 2: Generating embeddings...")
     embeddings = HuggingFaceEmbeddings(
         model_name='sentence-transformers/all-MiniLM-L6-v2',
         model_kwargs={'device': 'cpu'}
     )
     print("✅ Embedding model loaded.")
 
-    print("📦 Step 4: Creating and saving FAISS vector store...")
-    db = FAISS.from_documents(texts, embeddings)
+    print("📦 Step 3: Creating and saving FAISS vector store...")
+    db = FAISS.from_documents(documents, embeddings)
     os.makedirs(DB_FAISS_PATH, exist_ok=True)
     db.save_local(DB_FAISS_PATH)
     print(f"✅ Vector database saved to: {DB_FAISS_PATH}")

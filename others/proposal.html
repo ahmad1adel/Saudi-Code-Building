@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>المخطط المقترح | مدة التنفيذ والتكلفة</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      a[href^="http"]::after { content: ""; }
+    }
+    tbody tr:nth-child(odd) { background-color: #f9fafb; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased">
+  <div class="max-w-5xl mx-auto p-6">
+    <div class="bg-white shadow rounded-2xl p-6 mb-6">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">المخطط المقترح للتنفيذ</h1>
+          <p class="mt-1 text-gray-600">يشمل مهام التطوير، المدة الزمنية، والتكلفة التقديرية.</p>
+        </div>
+        <div class="no-print flex items-center gap-2">
+          <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-gray-900 text-white hover:bg-gray-800 transition">طباعة / حفظ PDF</button>
+          <a href="#" onclick="downloadHTML()" class="px-4 py-2 rounded-xl bg-white border border-gray-200 hover:bg-gray-100 transition">تحميل كـ HTML</a>
+        </div>
+      </div>
+      <div class="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-700">
+        <span class="inline-flex items-center gap-2"><span class="font-semibold">التقنيات:</span> Vue.js · Tailwind CSS · Node.js · Express.js · MongoDB</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="bg-white shadow rounded-2xl p-5">
+        <div class="text-sm text-gray-500">عدد المهام</div>
+        <div class="mt-2 text-2xl font-bold">7</div>
+      </div>
+      <div class="bg-white shadow rounded-2xl p-5">
+        <div class="text-sm text-gray-500">المدة الكلية</div>
+        <div class="mt-2 text-2xl font-bold">14 يوم عمل</div>
+      </div>
+      <div class="bg-white shadow rounded-2xl p-5">
+        <div class="text-sm text-gray-500">التكلفة الكلية</div>
+        <div class="mt-2 text-2xl font-bold">$900</div>
+      </div>
+    </div>
+
+    <div class="bg-white shadow rounded-2xl overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-100">
+        <h2 class="text-lg font-bold">تفاصيل المهام</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-gray-100">
+            <tr class="text-right">
+              <th class="px-6 py-3 font-semibold">المهمة</th>
+              <th class="px-6 py-3 font-semibold">الوصف المختصر</th>
+              <th class="px-6 py-3 font-semibold">المدة</th>
+              <th class="px-6 py-3 font-semibold">التكلفة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-6 py-4 font-medium">ربط خدمة الدردشة الحية</td>
+              <td class="px-6 py-4">دمج خدمة Live Chat مع بوت ذكاء اصطناعي وتخصيص الواجهة.</td>
+              <td class="px-6 py-4 whitespace-nowrap">2 أيام</td>
+              <td class="px-6 py-4 whitespace-nowrap">$125</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 font-medium">ربط التوثيق بالتصوير المباشر</td>
+              <td class="px-6 py-4">دمج Shufti Pro API لالتقاط سيلفي+هوية من الكاميرا والتحقق.</td>
+              <td class="px-6 py-4 whitespace-nowrap">4 أيام</td>
+              <td class="px-6 py-4 whitespace-nowrap">$240</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 font-medium">ربط بوابة الدفع بالعملات الرقمية</td>
+              <td class="px-6 py-4">دمج B2BinPay API لإنشاء عنوان دفع فريد لكل معاملة.</td>
+              <td class="px-6 py-4 whitespace-nowrap">3 أيام</td>
+              <td class="px-6 py-4 whitespace-nowrap">$200</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 font-medium">تحسين واجهة التسجيل والدخول</td>
+              <td class="px-6 py-4">إضافة زر تسجيل حساب بجانب تسجيل الدخول وتعديل التصميم.</td>
+              <td class="px-6 py-4 whitespace-nowrap">1 يوم</td>
+              <td class="px-6 py-4 whitespace-nowrap">$70</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 font-medium">حل خطأ 400 عند التسجيل</td>
+              <td class="px-6 py-4">مراجعة السجلات وتحسين التحقق من البيانات وعرض رسائل واضحة.</td>
+              <td class="px-6 py-4 whitespace-nowrap">1 يوم</td>
+              <td class="px-6 py-4 whitespace-nowrap">$80</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 font-medium">التحقق من جودة الصور</td>
+              <td class="px-6 py-4">فحص حجم وصيغة ودقة الصور قبل رفعها.</td>
+              <td class="px-6 py-4 whitespace-nowrap">1 يوم</td>
+              <td class="px-6 py-4 whitespace-nowrap">$65</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 font-medium">حل مشكلة تأكيد البريد الإلكتروني</td>
+              <td class="px-6 py-4">إصلاح الإرسال وإضافة خيار إعادة التفعيل من لوحة التحكم.</td>
+              <td class="px-6 py-4 whitespace-nowrap">2 أيام</td>
+              <td class="px-6 py-4 whitespace-nowrap">$120</td>
+            </tr>
+            <tr class="bg-gray-100 font-semibold">
+              <td class="px-6 py-4">الإجمالي</td>
+              <td class="px-6 py-4"></td>
+              <td class="px-6 py-4 whitespace-nowrap">14 يوم عمل</td>
+              <td class="px-6 py-4 whitespace-nowrap">$900</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white shadow rounded-2xl p-6 mt-6">
+      <h3 class="text-lg font-bold mb-3">ملاحظات</h3>
+      <ul class="list-disc pr-6 space-y-2 text-sm text-gray-700">
+        <li>الأسعار بالدولار الأمريكي وقابلة للتعديل حسب أي متطلبات إضافية.</li>
+        <li>المدة المذكورة هي أيام عمل ولا تشمل انتظار موافقات الأطراف الثالثة (مزودي الخدمات).</li>
+        <li>يشمل التسليم تكامل الواجهات، توثيق بسيط للاستخدام، واختبارات قبول أساسية (UAT).</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function downloadHTML() {
+      const blob = new Blob([document.documentElement.outerHTML], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "proposal.html";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

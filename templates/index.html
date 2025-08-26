@@ -28,11 +28,27 @@
         .image-preview {
             margin-top: 20px;
         }
-        pre {
-            background-color: #eef;
-            padding: 10px;
-            border-radius: 5px;
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+            background: #fff;
         }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #2c3e50;
+            color: white;
+        }
+        .status-passed { color: green; font-weight: bold; }
+        .status-partial { color: orange; font-weight: bold; }
+        .status-not { color: red; font-weight: bold; }
+        .status-unmeasurable { color: gray; font-weight: bold; }
+        .issue-text { margin-top: 5px; font-size: 14px; color: #444; }
     </style>
 </head>
 <body>
@@ -60,7 +76,40 @@
         </div>
     {% endif %}
 
-    {% if answer %}
+    {% if structured_results %}
+    <h3>Inspection Results:</h3>
+    {% if structured_results|length > 0 %}
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Notes / SBC Reference</th>
+            </tr>
+            {% for row in structured_results %}
+            <tr>
+                <td>{{ row.item }}</td>
+                <td class="
+                    {% if 'Passed' in row.status %}status-passed
+                    {% elif 'Partial' in row.status %}status-partial
+                    {% elif 'Not passed' in row.status %}status-not
+                    {% elif 'Unmeasurable' in row.status %}status-unmeasurable
+                    {% endif %}
+                ">
+                    {{ row.status }}
+                </td>
+                <td><div class="issue-text">{{ row.notes }}</div></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ url_for('download_pdf', filename=image_filename) }}">
+            <button type="button">⬇ Download PDF (English)</button>
+        </a>
+    {% else %}
+        <p style="color:red; font-weight:bold;">⚠️ No items found in analysis.</p>
+    {% endif %}
+{% endif %}
+
+    {% if answer and not structured_results %}
         <h3>Answer:</h3>
         <pre>{{ answer }}</pre>
     {% endif %}
