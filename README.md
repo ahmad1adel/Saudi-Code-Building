@@ -110,22 +110,23 @@ Simply input your query, and the bot will provide a detailed response based on t
 
 The following PDF reports are available for reference:
 
-- [Execution Plan](Results_pdf/execution_plan.pdf)
-- [Cost Analysis](Results_pdf/cost_analysis.pdf)
-- [Technical Documentation](Results_pdf/technical_documentation.pdf)
-
+- [Saudi Code](Results_pdf/Saudi%20Code.pdf)
+- [الجديد تقرير فحص الأعمال الكهربائية ](Results_pdf/الجديد%20تقرير%20فحص%20الأعمال%20الكهربائية%20.pdf)
+- [جدول فحص الأساسات ](Results_pdf/جدول%20فحص%20الأساسات%20.pdf)
+- [جدول فحص الأساسات بدون الملاحظات](Results_pdf/جدول%20فحص%20الأساسات%20بدون%20الملاحظات.pdf)
+- [الجديد تقرير فحص الأعمال الكهربائية](Results_pdf/جدول%20فحص%20الأعمال%20الكهربائية.pdf)
 ### Screenshots
 
 Below are some screenshots showcasing the bot's interface and functionality:
 
-#### Home Screen
-![Home Screen](screenshots/home_screen.png)
+#### Result Display 1
+![Home Screen](screenshots/image_1.png)
 
-#### Query Example
-![Query Example](screenshots/query_example.png)
+#### Result Display 2
+![Query Example](screenshots/image_2.png)
 
-#### Results Display
-![Results Display](screenshots/results_display.png)
+#### Result Display 3
+![Results Display](screenshots/image_3.png)
 
 ---
 
