@@ -55,13 +55,13 @@
 Below are some screenshots showcasing the Flask-based web interface and functionality:
 
 <p align="center">
-    <img src="screenshots/image_1.png" alt="Home Screen" width="350"/>
+    <img src="screenshots/image_1.png" alt="Home Screen" width="600"/>
 </p>
 <p align="center">
-    <img src="screenshots/image_2.png" alt="Query Example" width="350"/>
+    <img src="screenshots/image_2.png" alt="Query Example" width="600"/>
 </p>
 <p align="center">
-    <img src="screenshots/image_3.png" alt="Results Display" width="350"/>
+    <img src="screenshots/image_3.png" alt="Results Display" width="600"/>
 </p>
 
 ---
